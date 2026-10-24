@@ -40,8 +40,6 @@ public sealed class ModEntry : Mod
     {
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
         helper.Events.Input.ButtonPressed += OnButtonPressed;
-        helper.Events.Input.ButtonPressed += (_, e) => TraceChestTap("press", e.Button);
-        helper.Events.Input.ButtonReleased += (_, e) => TraceChestTap("release", e.Button);
         helper.Events.GameLoop.UpdateTicked += OnUpdateTicked;
         helper.Events.Display.MenuChanged += (_, e) => shopToFix = e.NewMenu as ShopMenu;
         // Item Bags restores one tick after SaveLoaded; put the bag ids back before that.
@@ -317,31 +315,6 @@ public sealed class ModEntry : Mod
         catch (Exception ex)
         {
             Monitor.Log($"Error handling tap: {ex}", LogLevel.Error);
-        }
-    }
-
-    /// <summary>Diagnostics for bags that cannot be moved into a chest: logs the menu state around each tap.</summary>
-    private void TraceChestTap(string phase, SButton button)
-    {
-        if (button != SButton.MouseLeft || Game1.activeClickableMenu is not ItemGrabMenu grab || grab.context is not Chest)
-            return;
-
-        // Logged before touching the menu, so a hard crash still shows whether this ran.
-        Monitor.Log($"Chest {phase} begin", LogLevel.Trace);
-        try
-        {
-            int x = Game1.getMouseX(true), y = Game1.getMouseY(true);
-            Item? player = grab.inventory?.getItemAt(x, y);
-            Item? chest = grab.ItemsToGrabMenu?.getItemAt(x, y);
-            Monitor.Log(
-                $"Chest {phase} at {x},{y}: held={grab.heldItem?.Name ?? "-"} playerSlot={player?.Name ?? "-"} chestSlot={chest?.Name ?? "-"}"
-                + $" inv.selected={grab.inventory?.currentlySelectedItem} inv.drag={grab.inventory?.dragItem} chest.selected={grab.ItemsToGrabMenu?.currentlySelectedItem}"
-                + $" chest.count={grab.ItemsToGrabMenu?.actualInventory.Count}/{grab.ItemsToGrabMenu?.capacity}",
-                LogLevel.Trace);
-        }
-        catch (Exception ex)
-        {
-            Monitor.Log($"Chest trace failed: {ex.Message}", LogLevel.Trace);
         }
     }
 
