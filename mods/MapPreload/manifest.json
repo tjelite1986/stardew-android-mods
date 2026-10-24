@@ -1,0 +1,9 @@
+{
+  "Name": "Map Preload",
+  "Author": "thomas",
+  "Version": "1.0.0",
+  "Description": "Loads every location map while the title screen is open, so creating a new game no longer freezes long enough for Android's 'app isn't responding' dialog.",
+  "UniqueID": "thomas.MapPreload",
+  "EntryDll": "MapPreload.dll",
+  "MinimumApiVersion": "4.1.3"
+}

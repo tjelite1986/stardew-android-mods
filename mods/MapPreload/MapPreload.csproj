@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Built against the Android game/SMAPI assemblies pulled from the tablet (lib/). -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>MapPreload</AssemblyName>
+    <RootNamespace>MapPreload</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <NoWarn>CA1416</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="lib/StardewValley.dll" Private="false" />
+    <Reference Include="lib/StardewValley.GameData.dll" Private="false" />
+    <Reference Include="lib/StardewModdingAPI.dll" Private="false" />
+    <Reference Include="lib/SMAPI.Toolkit.CoreInterfaces.dll" Private="false" />
+    <Reference Include="lib/MonoGame.Framework.dll" Private="false" />
+    <Reference Include="lib/xTile.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
