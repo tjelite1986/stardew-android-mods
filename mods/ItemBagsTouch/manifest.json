@@ -1,7 +1,7 @@
 {
   "Name": "Item Bags Touch",
   "Author": "thomas",
-  "Version": "1.3.1",
+  "Version": "1.4.0",
   "Description": "Double-tap a bag in the toolbar, inventory or a chest to open it on touch screens (Item Bags only opens on right-click).",
   "UniqueID": "thomas.ItemBagsTouch",
   "EntryDll": "ItemBagsTouch.dll",

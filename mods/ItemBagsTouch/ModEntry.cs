@@ -40,7 +40,10 @@ public sealed class ModEntry : Mod
     {
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
         helper.Events.Input.ButtonPressed += OnButtonPressed;
+        helper.Events.Input.ButtonPressed += (_, e) => TraceChestTap("press", e.Button);
+        helper.Events.Input.ButtonReleased += (_, e) => TraceChestTap("release", e.Button);
         helper.Events.GameLoop.UpdateTicked += OnUpdateTicked;
+        helper.Events.Display.MenuChanged += (_, e) => shopToFix = e.NewMenu as ShopMenu;
         // Item Bags restores one tick after SaveLoaded; put the bag ids back before that.
         helper.Events.GameLoop.Saving += (_, _) => StampBagIds();
         helper.Events.GameLoop.SaveLoaded += (_, _) =>
@@ -200,8 +203,48 @@ public sealed class ModEntry : Mod
             Monitor.Log("Item Bags API not found; double-tap to open is disabled.", LogLevel.Error);
     }
 
+    /// <summary>Fixed one tick after it opens, so Item Bags' own MenuChanged handler has added its stock.</summary>
+    private ShopMenu? shopToFix;
+
+    /// <summary>
+    /// Item Bags adds its bags with setItemPriceAndStock, which on Android only replaces forSale. The rows
+    /// stay as built: one per original item plus itemsPerPage spare rows from Initialize, which are as wide
+    /// as the screen and sit over the Buy button, so tapping Buy reselects whichever bag row is behind it.
+    /// The scroll limit is also left at the value computed before any stock existed.
+    /// </summary>
+    private void FixShopRows(ShopMenu shop)
+    {
+        if (Game1.activeClickableMenu != shop || shop.forSaleButtons.Count == shop.forSale.Count)
+            return;
+
+        int before = shop.forSaleButtons.Count;
+        Helper.Reflection.GetMethod(shop, "rebuildSaleButtons").Invoke();
+
+        var scrollArea = Helper.Reflection.GetField<MobileScrollbox>(shop, "scrollArea").GetValue();
+        int maxOffset = Math.Max(0, (shop.forSale.Count - shop.itemsPerPage) * (shop.itemButtonHeight + 8));
+        scrollArea.setMaxYOffset(maxOffset);
+        scrollArea.setYOffsetForScroll(Math.Max(-maxOffset, Math.Min(0, scrollArea.getYOffsetForScroll())));
+        Helper.Reflection.GetMethod(shop, "updateItemButtons").Invoke();
+
+        Monitor.Log($"Rebuilt shop rows for {shop.ShopId}: {before} -> {shop.forSaleButtons.Count} for {shop.forSale.Count} items.", LogLevel.Trace);
+    }
+
     private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
     {
+        if (shopToFix != null)
+        {
+            ShopMenu shop = shopToFix;
+            shopToFix = null;
+            try
+            {
+                FixShopRows(shop);
+            }
+            catch (Exception ex)
+            {
+                Monitor.Log($"Rebuilding shop rows failed: {ex}", LogLevel.Error);
+            }
+        }
+
         if (restoreCheckTicks >= 0 && restoreCheckTicks-- == 0)
         {
             try
@@ -274,6 +317,29 @@ public sealed class ModEntry : Mod
         catch (Exception ex)
         {
             Monitor.Log($"Error handling tap: {ex}", LogLevel.Error);
+        }
+    }
+
+    /// <summary>Diagnostics for bags that cannot be moved into a chest: logs the menu state around each tap.</summary>
+    private void TraceChestTap(string phase, SButton button)
+    {
+        if (button != SButton.MouseLeft || Game1.activeClickableMenu is not ItemGrabMenu grab || grab.context is not Chest)
+            return;
+
+        try
+        {
+            int x = Game1.getMouseX(true), y = Game1.getMouseY(true);
+            Item? player = grab.inventory?.getItemAt(x, y);
+            Item? chest = grab.ItemsToGrabMenu?.getItemAt(x, y);
+            Monitor.Log(
+                $"Chest {phase} at {x},{y}: held={grab.heldItem?.Name ?? "-"} playerSlot={player?.Name ?? "-"} chestSlot={chest?.Name ?? "-"}"
+                + $" inv.selected={grab.inventory?.currentlySelectedItem} inv.drag={grab.inventory?.dragItem} chest.selected={grab.ItemsToGrabMenu?.currentlySelectedItem}"
+                + $" chest.count={grab.ItemsToGrabMenu?.actualInventory.Count}/{grab.ItemsToGrabMenu?.capacity}",
+                LogLevel.Trace);
+        }
+        catch (Exception ex)
+        {
+            Monitor.Log($"Chest trace failed: {ex.Message}", LogLevel.Trace);
         }
     }
 
