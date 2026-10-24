@@ -1,0 +1,12 @@
+{
+  "Name": "EMC Crafting Fix",
+  "Author": "thomas",
+  "Version": "1.0.0",
+  "Description": "Fixes crafting on Android with ExtraMachineConfig installed: every recipe threw 'Value cannot be null (key)' and nothing was crafted.",
+  "UniqueID": "thomas.EmcCraftingFix",
+  "EntryDll": "EmcCraftingFix.dll",
+  "MinimumApiVersion": "4.1.3",
+  "Dependencies": [
+    { "UniqueID": "selph.ExtraMachineConfig", "IsRequired": false }
+  ]
+}

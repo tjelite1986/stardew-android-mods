@@ -50,3 +50,18 @@ when it is done. Content Patcher still invalidates any map whose patches change 
 exists, so the cached copies never hide a patch.
 
 No dependencies. Build and copy it like ItemBagsTouch, into `Mods/MapPreload/`.
+
+## EmcCraftingFix
+
+With ExtraMachineConfig 1.17.1-unofficial.1-android
+installed, nothing can be crafted on Android: every recipe throws
+`ArgumentNullException: Value cannot be null. (Parameter 'key')` from
+`CraftingHarmonyPatcher.ApplyChanges`, and the tap falls through to the game (it zooms instead).
+
+EMC's transpiler for `CraftingPage.clickCraftingRecipe` assumes the PC layout, where the recipe is a
+field of the method's closure (`ldloc.0`). On Android the recipe is `this.hoverRecipe`, so EMC reads
+`hoverRecipe` off the closure object and gets a recipe with a null name. This mod removes EMC's
+transpiler on `GameLaunched` and applies one that loads the recipe from `this`, still calling EMC's own
+`ApplyChanges`. It does nothing if ExtraMachineConfig is not installed.
+
+Build and copy it like ItemBagsTouch, into `Mods/EmcCraftingFix/`.
