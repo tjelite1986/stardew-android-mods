@@ -1,0 +1,12 @@
+# Whitelist: only the mods and repo meta are tracked. The launcher skin work,
+# keystore, APKs, decoded APK and device backups stay local.
+/*
+!/.gitignore
+!/README.md
+!/mods/
+
+# Build output and game/SMAPI reference assemblies (copied from the device, not redistributable)
+bin/
+obj/
+lib/
+docs/
