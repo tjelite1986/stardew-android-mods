@@ -326,6 +326,8 @@ public sealed class ModEntry : Mod
         if (button != SButton.MouseLeft || Game1.activeClickableMenu is not ItemGrabMenu grab || grab.context is not Chest)
             return;
 
+        // Logged before touching the menu, so a hard crash still shows whether this ran.
+        Monitor.Log($"Chest {phase} begin", LogLevel.Trace);
         try
         {
             int x = Game1.getMouseX(true), y = Game1.getMouseY(true);
