@@ -1,0 +1,9 @@
+{
+  "Name": "Sunberry Tarot Fix",
+  "Author": "thomas",
+  "Version": "1.2.0",
+  "Description": "Lets Sunberry Village's code start on Android: provides the tarot buff icons and the placeholder player its tarot setup needs before Android has created them; otherwise its Entry aborts.",
+  "UniqueID": "thomas.SunberryTarotFix",
+  "EntryDll": "SunberryTarotFix.dll",
+  "MinimumApiVersion": "4.1.3"
+}

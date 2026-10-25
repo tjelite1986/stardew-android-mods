@@ -1,0 +1,9 @@
+{
+  "Name": "East Scarp Map Fix",
+  "Author": "thomas",
+  "Version": "1.0.0",
+  "Description": "Provides the vanilla Craftables sheet as Maps/TileSheets/Craftables, so East Scarp's ruined/repaired orchard house and meadow shed maps load once their '../TileSheets/Craftables.png' tilesheet path is changed to 'TileSheets/Craftables.png'.",
+  "UniqueID": "thomas.EastScarpMapFix",
+  "EntryDll": "EastScarpMapFix.dll",
+  "MinimumApiVersion": "4.1.3"
+}

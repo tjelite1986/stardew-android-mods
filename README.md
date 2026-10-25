@@ -91,3 +91,31 @@ Config files as they are on the tablet, for mods that needed changes:
 - `configs/VirtualKeyboard/config.json`: `Position` reset to `60, 20`. The mod reads the saved position as
   screen pixels and rescales it on every start, so it drifts until the button is off-screen. Reset it
   when the button disappears.
+
+## SunberryTarotFix
+
+Sunberry Village 1.1.2's code crashes on entry on Android, and the crash skips most of its setup
+(maps, shops, special orders, phone, its Harmony patches). Its `TarotManager` static constructor runs
+during `Entry` and needs two things Android doesn't have yet at that point:
+
+- the `SunberryTeam.SBV/Tarot/BuffIcons` texture, which Sunberry only provides from an asset handler
+  that the same method registers afterwards. This mod copies `assets/Tarot/Buffs.png` from Sunberry's
+  folder and provides it at low priority;
+- `Game1.player`. Android SMAPI enters mods before the game creates its title-screen farmer, and
+  Sunberry binds a delegate to `Game1.player.isMarriedOrRoommates`. A Harmony prefix/finalizer on
+  Sunberry's `Entry` puts an unconstructed placeholder farmer in place only while it runs, then rebinds
+  that tarot condition to the real player.
+
+Sunberry has to enter after this mod, so add it to `[C#] Sunberry Village/manifest.json`:
+
+```json
+{ "UniqueID": "thomas.SunberryTarotFix", "IsRequired": false }
+```
+
+## EastScarpMapFix
+
+Three East Scarp 3.0.9 maps (`OrchardHouse-ruins`, `OrchardHouse-repaired`, `MeadowFarmShed_ruins`)
+use the tilesheet path `../TileSheets/Craftables.png`, which SMAPI rejects, so the maps don't load.
+Change it in those three `.tmx` files under `East Scarp Core/assets/Locations/Interiors/` to
+`TileSheets/Craftables.png`. SMAPI then requests `Maps/TileSheets/Craftables`, which this mod provides
+from the game's own `TileSheets/Craftables`.
