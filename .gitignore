@@ -4,6 +4,8 @@
 !/.gitignore
 !/README.md
 !/mods/
+!/modded-bags/
+!/configs/
 
 # Build output and game/SMAPI reference assemblies (copied from the device, not redistributable)
 bin/

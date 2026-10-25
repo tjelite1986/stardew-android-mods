@@ -1,0 +1,14 @@
+{
+  "Position": "60, 20",
+  "Size": 90.0,
+  "Opacity": 0.7,
+  "Layout1": [
+    "I",
+    "P"
+  ],
+  "Layout2": [
+    "Console:openconsole",
+    "Use CMD:opencommand"
+  ],
+  "Layout3": []
+}

@@ -69,3 +69,25 @@ transpiler on `GameLaunched` and applies one that loads the recipe from `this`, 
 `ApplyChanges`. It does nothing if ExtraMachineConfig is not installed.
 
 Build and copy it like ItemBagsTouch, into `Mods/EmcCraftingFix/`.
+
+## Modded bags for Item Bags
+
+Item Bags' built-in bags only hold vanilla items. `modded-bags/generate.py <dir>` writes 12 modded-bag
+definitions for Stardew Valley Expanded and the Cornucopia packs (`modded-bags/out/`). Copy them to
+`Mods/ItemBags/assets/Modded Bags/`.
+
+- Bags select items with `ItemFilters`: the entries are ANDed and `|` ORs inside one entry.
+  `FromMod:Cornucopia` covers all four Cornucopia packs (their ids share the `Cornucopia_` prefix).
+- The bag menu cannot scroll, so big sets are split by first letter (the built-in Food Bag holds 108 types).
+- `BagId` is a UUIDv5 of the bag name, so regenerating keeps existing bags. Renaming a bag orphans them.
+
+## Configs
+
+Config files as they are on the tablet, for mods that needed changes:
+
+- `configs/OddQualityOfLife/config.json`: friendship/animal/fence decay, pet bowls and fishing hook assist
+  are off, because CJB Cheats Menu and Yet Another Fishing Mod already handle them. The `*_decay` keys
+  read backwards: `true` turns ON the feature that prevents decay.
+- `configs/VirtualKeyboard/config.json`: `Position` reset to `60, 20`. The mod reads the saved position as
+  screen pixels and rescales it on every start, so it drifts until the button is off-screen. Reset it
+  when the button disappears.

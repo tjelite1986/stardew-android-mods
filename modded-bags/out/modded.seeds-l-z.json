@@ -1,0 +1,129 @@
+{
+  "IsEnabled": true,
+  "ModUniqueId": "Cornucopia.MoreCrops",
+  "BagId": "d8b98b0a-d248-53a7-87c3-a90fd5117978",
+  "BagName": "Modded Seed Bag (L-Z)",
+  "BagDescription": "A bag for seeds and saplings from Cornucopia and SVE, L to Z.",
+  "IconTexture": "SpringObjects",
+  "IconPosition": "{X:272 Y:304 Width:16 Height:16}",
+  "Prices": {
+    "Small": 2500,
+    "Medium": 8000,
+    "Large": 28000,
+    "Giant": 85000,
+    "Massive": 400000
+  },
+  "Capacities": {
+    "Small": 30,
+    "Medium": 99,
+    "Large": 300,
+    "Giant": 999,
+    "Massive": 9999
+  },
+  "SizeSellers": {
+    "Small": [
+      "Pierre"
+    ],
+    "Medium": [
+      "Pierre"
+    ],
+    "Large": [
+      "Pierre"
+    ],
+    "Giant": [
+      "Pierre"
+    ],
+    "Massive": [
+      "Pierre"
+    ]
+  },
+  "SizeMenuOptions": {
+    "Small": {
+      "GroupByQuality": false,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 5,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 20,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 48
+      }
+    },
+    "Medium": {
+      "GroupByQuality": false,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 5,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 20,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 48
+      }
+    },
+    "Large": {
+      "GroupByQuality": false,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 5,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 20,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 48
+      }
+    },
+    "Giant": {
+      "GroupByQuality": false,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 5,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 20,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 48
+      }
+    },
+    "Massive": {
+      "GroupByQuality": false,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 5,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 20,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 48
+      }
+    }
+  },
+  "Items": [],
+  "ItemFilters": [
+    "FromMod:FlashShifter.StardewValleyExpandedCP|FromMod:Cornucopia",
+    "CategoryId:-74",
+    "LocalIdRegex:^[^_]*_[L-Zl-z]"
+  ],
+  "ItemFiltersSorting": "DisplayName"
+}
