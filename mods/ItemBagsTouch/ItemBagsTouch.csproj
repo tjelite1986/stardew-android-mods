@@ -19,6 +19,7 @@
     <Reference Include="lib/SMAPI.Toolkit.CoreInterfaces.dll" Private="false" />
     <Reference Include="lib/MonoGame.Framework.dll" Private="false" />
     <Reference Include="lib/xTile.dll" Private="false" />
+    <Reference Include="lib/0Harmony.dll" Private="false" />
   </ItemGroup>
 
   <ItemGroup>

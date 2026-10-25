@@ -199,6 +199,90 @@ public sealed class ModEntry : Mod
         bags = Helper.ModRegistry.GetApi<IItemBagsApi>("SlayerDharok.Item_Bags");
         if (bags == null)
             Monitor.Log("Item Bags API not found; double-tap to open is disabled.", LogLevel.Error);
+
+        PatchCloseContents();
+    }
+
+    private static IMonitor? staticMonitor;
+
+    /// <summary>
+    /// When a bag opened from a chest closes, Item Bags removes every null from the chest's list before
+    /// restoring the chest menu. On Android a chest is padded with null slots and items are dropped into
+    /// those slots, so afterwards the chest looks sorted and nothing more can be put in until it is reopened.
+    /// Put the empty slots back where they were.
+    /// </summary>
+    private void PatchCloseContents()
+    {
+        staticMonitor = Monitor;
+        var target = HarmonyLib.AccessTools.Method("ItemBags.Bags.ItemBag:CloseContents", new[] { typeof(bool), typeof(bool) });
+        if (target == null)
+        {
+            Monitor.Log("ItemBag.CloseContents(bool, bool) not found; chest slots will not be restored.", LogLevel.Error);
+            return;
+        }
+
+        new HarmonyLib.Harmony(ModManifest.UniqueID).Patch(
+            target,
+            prefix: new HarmonyLib.HarmonyMethod(typeof(ModEntry), nameof(BeforeCloseContents)),
+            postfix: new HarmonyLib.HarmonyMethod(typeof(ModEntry), nameof(AfterCloseContents)));
+    }
+
+    private static void BeforeCloseContents(object __instance, bool RestorePreviousMenu, out List<Item?>? __state)
+    {
+        __state = null;
+        try
+        {
+            if (RestorePreviousMenu
+                && HarmonyLib.AccessTools.Property(__instance.GetType(), "PreviousMenu")?.GetValue(__instance) is ItemGrabMenu { context: Chest } grab
+                && grab.ItemsToGrabMenu?.actualInventory is IList<Item> slots)
+            {
+                __state = new List<Item?>(slots);
+            }
+        }
+        catch (Exception ex)
+        {
+            staticMonitor?.Log($"Snapshotting chest slots failed: {ex}", LogLevel.Error);
+        }
+    }
+
+    private static void AfterCloseContents(List<Item?>? __state)
+    {
+        if (__state == null || Game1.activeClickableMenu is not ItemGrabMenu grab || grab.ItemsToGrabMenu?.actualInventory is not IList<Item> slots)
+            return;
+
+        try
+        {
+            var before = new List<Item>();
+            foreach (Item? item in __state)
+            {
+                if (item != null)
+                    before.Add(item);
+            }
+
+            bool sameItems = before.Count == slots.Count;
+            for (int i = 0; sameItems && i < slots.Count; i++)
+                sameItems = ReferenceEquals(before[i], slots[i]);
+
+            if (sameItems)
+            {
+                for (int i = 0; i < __state.Count; i++)
+                {
+                    if (__state[i] == null)
+                        slots.Insert(i, null!);
+                }
+            }
+            else
+            {
+                while (slots.Count < __state.Count)
+                    slots.Add(null!);
+            }
+
+            staticMonitor?.Log($"Restored chest slots after closing a bag: {slots.Count} slots ({(sameItems ? "original positions" : "padded at the end")}).", LogLevel.Trace);
+        }
+        catch (Exception ex)
+        {
+            staticMonitor?.Log($"Restoring chest slots failed: {ex}", LogLevel.Error);
+        }
     }
 
     /// <summary>Fixed one tick after it opens, so Item Bags' own MenuChanged handler has added its stock.</summary>

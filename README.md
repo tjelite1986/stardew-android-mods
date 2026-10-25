@@ -12,9 +12,13 @@ Companion mod for [Item Bags](https://www.nexusmods.com/stardewvalley/mods/1804)
   Rusty Sword with `ParentSheetIndex = 5000 + bag id` while saving and swaps it back after loading.
   On Android, SpaceCore's serializer drops that index, so the bag is lost. This mod stores the bag id
   in `modData` on `Saving` and restores it on `SaveLoaded`, before Item Bags runs its own restore.
+- **Keeps a chest's empty slots after a bag closes.** Item Bags removes every empty slot from the
+  chest before showing it again. On Android you drop items into those empty slots, so the chest looked
+  sorted and nothing more could go in until it was reopened. A Harmony patch on `ItemBag.CloseContents`
+  puts the empty slots back where they were.
 
-Requires Item Bags (`SlayerDharok.Item_Bags`). Talks to it only through its public API
-(`IItemBagsApi`), so it does not reference `ItemBags.dll`.
+Requires Item Bags (`SlayerDharok.Item_Bags`). Talks to it through its public API
+(`IItemBagsApi`) and one Harmony patch found by name, so it does not reference `ItemBags.dll`.
 
 ### Building
 
@@ -23,7 +27,7 @@ from the device's `files/Stardew Assemblies/` into `mods/ItemBagsTouch/lib/`:
 
 ```
 StardewValley.dll  StardewValley.GameData.dll  StardewModdingAPI.dll
-SMAPI.Toolkit.CoreInterfaces.dll  MonoGame.Framework.dll  xTile.dll
+SMAPI.Toolkit.CoreInterfaces.dll  MonoGame.Framework.dll  xTile.dll  0Harmony.dll
 ```
 
 Then:
