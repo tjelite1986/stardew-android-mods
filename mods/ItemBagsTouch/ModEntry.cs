@@ -278,6 +278,10 @@ public sealed class ModEntry : Mod
             }
 
             staticMonitor?.Log($"Restored chest slots after closing a bag: {slots.Count} slots ({(sameItems ? "original positions" : "padded at the end")}).", LogLevel.Trace);
+
+            // The tap on the bag's close button is still in progress; the chest menu would get the rest of it and
+            // move whatever is under the finger (the bag itself, when the X sits over it) into the chest.
+            Game1.activeClickableMenu = new SwallowTapMenu(grab);
         }
         catch (Exception ex)
         {
@@ -324,6 +328,16 @@ public sealed class ModEntry : Mod
             catch (Exception ex)
             {
                 Monitor.Log($"Rebuilding shop rows failed: {ex}", LogLevel.Error);
+            }
+        }
+
+        if (Game1.activeClickableMenu is SwallowTapMenu swallow)
+        {
+            SButtonState tap = Helper.Input.GetState(SButton.MouseLeft);
+            if (tap is SButtonState.None or SButtonState.Released || ++swallow.Ticks > SwallowTapMenu.MaxTicks)
+            {
+                Monitor.Log($"Chest menu takes input again after {swallow.Ticks} ticks (tap {tap}).", LogLevel.Trace);
+                Game1.activeClickableMenu = swallow.Underlying;
             }
         }
 
@@ -524,4 +538,32 @@ public sealed class ModEntry : Mod
         lastTapList = null;
         lastTapIndex = -1;
     }
+}
+
+/// <summary>Shows a menu without letting it handle input, until the current tap ends.</summary>
+internal sealed class SwallowTapMenu : IClickableMenu
+{
+    public const int MaxTicks = 120;
+
+    public readonly IClickableMenu Underlying;
+
+    public int Ticks;
+
+    public SwallowTapMenu(IClickableMenu underlying)
+        : base(underlying.xPositionOnScreen, underlying.yPositionOnScreen, underlying.width, underlying.height)
+    {
+        Underlying = underlying;
+    }
+
+    public override void receiveLeftClick(int x, int y, bool playSound = true) { }
+
+    public override void leftClickHeld(int x, int y) { }
+
+    public override void releaseLeftClick(int x, int y) { }
+
+    public override void receiveRightClick(int x, int y, bool playSound = true) { }
+
+    public override void receiveKeyPress(Microsoft.Xna.Framework.Input.Keys key) { }
+
+    public override void draw(Microsoft.Xna.Framework.Graphics.SpriteBatch b) => Underlying.draw(b);
 }
