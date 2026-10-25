@@ -122,7 +122,21 @@
   "Items": [],
   "ItemFilters": [
     "FromMod:FlashShifter.StardewValleyExpandedCP|FromMod:Cornucopia",
-    "CategoryId:-26,-27"
+    "CategoryId:-26,-27",
+    "!LocalId:Cornucopia_Candles",
+    "!LocalId:Cornucopia_DriedFlower",
+    "!LocalId:Cornucopia_DriedHerb",
+    "!LocalId:Cornucopia_DriedVegetable",
+    "!LocalId:Cornucopia_EssentialOil",
+    "!LocalId:Cornucopia_FlavoredYogurt",
+    "!LocalId:Cornucopia_NutButter",
+    "!LocalId:Cornucopia_NutCheese",
+    "!LocalId:Cornucopia_PickledEggs",
+    "!LocalId:Cornucopia_PickledFish",
+    "!LocalId:Cornucopia_SmokedCheese",
+    "!LocalId:Cornucopia_SmokedEgg",
+    "!LocalId:Cornucopia_SmokedMeat",
+    "!LocalId:Cornucopia_WaxMelts"
   ],
   "ItemFiltersSorting": "DisplayName"
 }

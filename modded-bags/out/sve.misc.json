@@ -1,0 +1,134 @@
+{
+  "IsEnabled": true,
+  "ModUniqueId": "FlashShifter.StardewValleyExpandedCP",
+  "BagId": "0f25803e-9a20-5df6-9738-00ec491f5e11",
+  "BagName": "SVE Odds & Ends Bag",
+  "BagDescription": "A bag for Stardew Valley Expanded's odds and ends.",
+  "IconTexture": "SpringObjects",
+  "IconPosition": "{X:32 Y:48 Width:16 Height:16}",
+  "Prices": {
+    "Small": 2500,
+    "Medium": 8000,
+    "Large": 28000,
+    "Giant": 85000,
+    "Massive": 400000
+  },
+  "Capacities": {
+    "Small": 30,
+    "Medium": 99,
+    "Large": 300,
+    "Giant": 999,
+    "Massive": 9999
+  },
+  "SizeSellers": {
+    "Small": [
+      "HatMouse"
+    ],
+    "Medium": [
+      "HatMouse"
+    ],
+    "Large": [
+      "HatMouse"
+    ],
+    "Giant": [
+      "HatMouse"
+    ],
+    "Massive": [
+      "HatMouse"
+    ]
+  },
+  "SizeMenuOptions": {
+    "Small": {
+      "GroupByQuality": true,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 6,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 12,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 64
+      }
+    },
+    "Medium": {
+      "GroupByQuality": true,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 6,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 12,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 64
+      }
+    },
+    "Large": {
+      "GroupByQuality": true,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 6,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 12,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 64
+      }
+    },
+    "Giant": {
+      "GroupByQuality": true,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 6,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 12,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 64
+      }
+    },
+    "Massive": {
+      "GroupByQuality": true,
+      "InventoryColumns": 12,
+      "InventorySlotSize": 64,
+      "GroupedLayoutOptions": {
+        "GroupsPerRow": 6,
+        "ShowValueColumn": true,
+        "SlotSize": 64
+      },
+      "UngroupedLayoutOptions": {
+        "Columns": 12,
+        "LineBreakIndices": [],
+        "LineBreakHeights": [],
+        "SlotSize": 64
+      }
+    }
+  },
+  "Items": [],
+  "ItemFilters": [
+    "FromMod:FlashShifter.StardewValleyExpandedCP",
+    "CategoryId:0,-2,-5,-8,-17,-18,-23,-28,-96",
+    "!LocalId:FlashShifter.StardewValleyExpandedCP_Aurora_Vineyard_Property_Deed",
+    "!LocalId:FlashShifter.StardewValleyExpandedCP_Castle_Village_Outpost_Vendor_Schedule",
+    "!LocalId:FlashShifter.StardewValleyExpandedCP_Golden_Key",
+    "!LocalId:FlashShifter.StardewValleyExpandedCP_Lance's_Schedule",
+    "!LocalId:FlashShifter.StardewValleyExpandedCP_Mermaid's_Bracelet",
+    "!LocalId:FlashShifter.StardewValleyExpandedCP_Property_Deed"
+  ],
+  "ItemFiltersSorting": "DisplayName"
+}

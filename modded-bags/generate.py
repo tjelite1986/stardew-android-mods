@@ -63,6 +63,23 @@ def bag(file, mod_id, name, description, icon_index, seller, filters, menu_optio
         "ItemFiltersSorting": "DisplayName",
     }
 
+# Machine outputs that copy their price from the input (CopyPrice + PreserveId), so one id
+# has many prices. The Cornucopia bag pack on Nexus leaves these out because they bug in a bag.
+VARIABLE_PRICE = [
+    "Cornucopia_Candles", "Cornucopia_DriedFlower", "Cornucopia_DriedHerb", "Cornucopia_DriedVegetable",
+    "Cornucopia_EssentialOil", "Cornucopia_FlavoredYogurt", "Cornucopia_NutButter", "Cornucopia_NutCheese",
+    "Cornucopia_PickledEggs", "Cornucopia_PickledFish", "Cornucopia_SmokedCheese", "Cornucopia_SmokedEgg",
+    "Cornucopia_SmokedMeat", "Cornucopia_WaxMelts",
+]
+NOT_VARIABLE_PRICE = [f"!LocalId:{i}" for i in VARIABLE_PRICE]
+
+# SVE's price-0 key and quest items: deeds, keys and schedules must stay in the inventory.
+SVE_KEY_ITEMS = [
+    "Aurora_Vineyard_Property_Deed", "Castle_Village_Outpost_Vendor_Schedule", "Golden_Key",
+    "Lance's_Schedule", "Mermaid's_Bracelet", "Property_Deed",
+]
+NOT_SVE_KEY_ITEMS = [f"!LocalId:FlashShifter.StardewValleyExpandedCP_{i}" for i in SVE_KEY_ITEMS]
+
 GROUPED = menu(True)
 WIDE = menu(False, columns=20, slot=48)
 
@@ -90,7 +107,11 @@ BAGS = [
         [ANY_MOD, "CategoryId:-74", first_letter("L", "Z")], WIDE),
     bag("modded.artisan.json", "Cornucopia.ArtisanMachines", "Modded Artisan Bag",
         "A bag for artisan goods and syrups from Cornucopia and SVE.", 348, "Pierre",
-        [ANY_MOD, "CategoryId:-26,-27"], menu(True, per_row=8)),
+        [ANY_MOD, "CategoryId:-26,-27", *NOT_VARIABLE_PRICE], menu(True, per_row=8)),
+    # Everything of SVE's that no other bag takes: gems, eggs, slime/void items, elixirs, relics.
+    bag("sve.misc.json", "FlashShifter.StardewValleyExpandedCP", "SVE Odds & Ends Bag",
+        "A bag for Stardew Valley Expanded's odds and ends.", 74, "HatMouse",
+        [SVE, "CategoryId:0,-2,-5,-8,-17,-18,-23,-28,-96", *NOT_SVE_KEY_ITEMS], menu(True, per_row=6)),
 ]
 
 for lo, hi in [("A", "C"), ("D", "L"), ("M", "R"), ("S", "Z")]:
