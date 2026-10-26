@@ -1,0 +1,66 @@
+{
+    "Format": "2.8.0",
+    "Changes": [
+        // Lunna's own mod Loads Portraits/Lunna at Exclusive priority and paints its
+        // 128px seasonal sheets over it, so the HD sheet goes in its own asset and an
+        // Appearance entry points the NPC at it. Island attire is left to the default.
+        {
+            "LogName": "Lunna HD portrait sheet",
+            "Action": "Load",
+            "Target": "Custom/thomas.LunnaHDPortraits/Lunna",
+            "FromFile": "assets/Lunna.png"
+        },
+        {
+            "LogName": "Lunna HD appearance",
+            "Action": "EditData",
+            "Target": "Data/Characters",
+            "Fields": {
+                "Lunna": {
+                    "Appearance": [
+                        {
+                            "Id": "thomas.LunnaHDPortraits.Default",
+                            "Portrait": "Custom/thomas.LunnaHDPortraits/Lunna",
+                            "Sprite": "Characters/Lunna",
+                            "IsIslandAttire": false,
+                            "Precedence": 0
+                        }
+                    ]
+                }
+            }
+        },
+        // Same layout Pretty Anime Portraits uses for its 1024px frames.
+        {
+            "LogName": "Lunna DDFC layout",
+            "Action": "EditData",
+            "Target": "aedenthorn.DialogueDisplayFramework/dictionary",
+            "Entries": {
+                "Lunna": {
+                    "packName": "thomas.LunnaHDPortraits",
+                    "height": 384,
+                    "width": 900,
+                    "xOffset": 508,
+                    "yOffset": 0,
+                    "dialogue": { "xOffset": 24, "yOffset": 12, "width": 880, "height": 600 },
+                    "portrait": {
+                        "xOffset": -940, "yOffset": -960, "h": 1024, "w": 1024,
+                        "right": false, "bottom": true, "scale": 1
+                    },
+                    "name": { "xOffset": 180, "yOffset": -440, "scroll": true, "right": false, "bottom": true, "centered": true, "scrollType": 0 },
+                    "jewel": { "xOffset": -48, "yOffset": -60, "right": true },
+                    "button": { "xOffset": -40, "yOffset": -48, "right": true, "bottom": true },
+                    "hearts": { "xOffset": 8, "yOffset": -24, "bottom": true, "showEmptyHearts": true, "heartsPerRow": 14 },
+                    "scrollTexts": [],
+                    "images": [],
+                    "texts": [ { "disabled": true } ],
+                    "dividers": [ { "disabled": true, "xOffset": 0, "height": 0 } ]
+                }
+            }
+        },
+        {
+            "LogName": "DDFCScaler opt-in",
+            "Action": "EditData",
+            "Target": "dakot.DDFCScaler/ScaledNPCs",
+            "Entries": { "Lunna": "Default" }
+        }
+    ]
+}

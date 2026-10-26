@@ -1,0 +1,15 @@
+{
+  "Name": "Lunna HD Portraits",
+  "Author": "thomas",
+  "Version": "1.0.0",
+  "Description": "Shows JoyZ8181's HD Lunna portraits (Nexus 40957, a Portraiture pack) through an Appearance entry and Dialogue Display Framework Continued, without Portraiture.",
+  "UniqueID": "thomas.LunnaHDPortraits",
+  "ContentPackFor": {
+    "UniqueID": "Pathoschild.ContentPatcher"
+  },
+  "Dependencies": [
+    { "UniqueID": "Rafseazz.LunnaCP", "IsRequired": true },
+    { "UniqueID": "Mangupix.DialogueDisplayFrameworkContinued", "IsRequired": true },
+    { "UniqueID": "dakot.DDFCScaler", "IsRequired": false }
+  ]
+}

@@ -12,3 +12,6 @@ bin/
 obj/
 lib/
 docs/
+
+# Third-party art bundled into our own content packs
+mods/LunnaHDPortraits/assets/
